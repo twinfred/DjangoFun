@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'apps.blogs',
     'apps.time_display',
     'apps.rand_word',
+    'apps.survey_form',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
