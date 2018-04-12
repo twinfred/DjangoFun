@@ -1,4 +1,4 @@
-"""django_app URL Configuration
+"""djangoFun URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -19,6 +19,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
+    url(r'^random-word/', include('apps.rand_word.urls')),
     url(r'^time-display/', include('apps.time_display.urls')),
     url(r'^', include('apps.blogs.urls')),
 ]
