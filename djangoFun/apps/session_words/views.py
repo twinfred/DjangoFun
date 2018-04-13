@@ -12,7 +12,7 @@ def index(request):
 def add_session(request):
     # New word to add:
     new_word = {}
-    if not 'word' in request.POST:
+    if request.POST['word'] == '':
         return redirect('/session-words/')
     else:
         new_word['word'] = request.POST['word']
