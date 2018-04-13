@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'apps.rand_word',
     'apps.survey_form',
     'apps.session_words',
+    'apps.ecommerce',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
