@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ninja Gold</title>
+</head>
+<body>
+    <div id="wrapper">
+        <p>Your Gold:</p>
+        <div>{{request.session.gold_count}}</div>
+        <a href="/reset"><button>Reset</button></a>
+        <div id="goldLocations">
+            <div class="goldLocation">
+                <h2>Farm</h2>
+                <p>(find 10-20 gold)</p>
+                <form action="/find_gold/" method="POST">
+                    {% csrf_token %}
+                    <input type='hidden' name='location' value='farm'>
+                    <input type="submit" value="Search Farm">
+                </form>
+            </div>
+            <div class="goldLocation">
+                <h2>Cave</h2>
+                <p>(find 5-10 gold)</p>
+                <form action="/find_gold/" method="POST">
+                    {% csrf_token %}
+                    <input type='hidden' name='location' value='cave'>
+                    <input type="submit" value="Search Cave">
+                </form>
+            </div>
+            <div class="goldLocation">
+                <h2>House</h2>
+                <p>(find 2-5 gold)</p>
+                <form action="/find_gold/" method="POST">
+                    {% csrf_token %}
+                    <input type='hidden' name='location' value='house'>
+                    <input type="submit" value="Search House">
+                </form>
+            </div>
+            <div class="goldLocation">
+                <h2>Casino</h2>
+                <p>(win/lose 0-50 gold)</p>
+                <form action="/find_gold/" method="POST">
+                    {% csrf_token %}
+                    <input type='hidden' name='location' value='casino'>
+                    <input type="submit" value="Feeling Lucky?">
+                </form>
+            </div>
+        </div>
+        <p>Activities</p>
+        <div id="activitiesList">
+            <ul>
+            {% for i in request.session.activities %}
+                <li style="color: {{i.outcome}}">
+                    {% if i.outcome == "green" %}
+                        You won {{i.winnings}} gold at the {{i.location}}! ({{i.created_at}})
+                    {% else %}
+                        You lost {{i.winnings}} gold at the {{i.location}}... Ouch... ({{i.created_at}})
+                    {% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
