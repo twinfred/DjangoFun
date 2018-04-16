@@ -18,6 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^dojo/', include('apps.dojo_ninjas.urls')),
+    url(r'^library/', include('apps.book_authors.urls')),
     url(r'^', include('apps.first_app.urls')),
     url(r'^admin/', admin.site.urls)
 ]
