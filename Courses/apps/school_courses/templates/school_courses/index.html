@@ -8,5 +8,48 @@
 </head>
 <body>
     <h1>Add a new course</h1>
+    {% if messages %}
+    <ul class="message">
+        {% for message in messages %}
+        <li{% if message.tags%} class="{{message.tags}}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form action="/courses/add/" method="post">
+        {% csrf_token %}
+        <table>
+            <tbody>
+                <tr>
+                    <td>Name: </td>
+                    <td><input type="text" name="name" id="name"></td>
+                </tr>
+                <tr>
+                    <td>Description: </td>
+                    <td><textarea name="desc" id="desc" cols="30" rows="10"></textarea></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Add"></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <table>
+        <thead>
+            <th>Course Name</th>
+            <th>Description</th>
+            <th>Date Added</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+            <tr>
+                <td>{{course.name}}</td>
+                <td>{{course.description.desc}}</td>
+                <td>{{course.created_at}}</td>
+                <td><a href="/courses/{{course.id}}/destroy"><button>Remove</button></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>
