@@ -65,12 +65,12 @@ class BookManager(models.Manager):
 class ReviewManager(models.Manager):
     def basic_validator(self, postData):
         errors = {}
-        if len(postData['review']) < 1:
-            errors['review'] = "A review is required."
-        if len(postData['review']) < 10:
-            errors['review'] = "Your review is too short."
-        if postData['rating'] == "None":
-            errors['rating'] = "A rating is required."
+        if len(postData['content']) < 1:
+            errors['content'] = "A review is required."
+        if len(postData['content']) < 10:
+            errors['content'] = "Your review is too short."
+        if postData['content'] == "None":
+            errors['content'] = "A rating is required."
 
 # Database Tables
 class User(models.Model):

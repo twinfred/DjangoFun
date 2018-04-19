@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{user.first_name}} {{user.last_name}}</title>
+</head>
+<body>
+    <a href="/logout/"><button>Logout</button></a>
+    <a href="/books/"><button>Home</button></a>
+    <a href="/books/add-book/"><button>Add Book and Review</button></a>
+    {% if messages %}
+    <ul class="message">
+        {% for message in messages %}
+        <li{% if message.tags%} class="{{message.tags}}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <h2>{{user.first_name}} {{user.last_name}}</h2>
+    <p>Email: {{user.email}}</p>
+    <p>Reviews: {{user.reviews.count}}</p>
+    <hr>
+    <h3>Posted reviews to the following books:</h3>
+    <ul>
+        {% for review in reviews %}
+        <li><a href="/books/{{review.of_book.id}}/">{{review.of_book.title}}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

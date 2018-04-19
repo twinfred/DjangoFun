@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Book Reviewer</title>
 </head>
 <body>
     {% if messages %}
@@ -16,7 +16,7 @@
     {% endif %}
     {% if 'logged' in request.session %}
     <h2>Welcome back, {{user.first_name}}!</h2>
-    <form action="/login" method="POST">
+    <form action="/login/" method="POST">
         {% csrf_token %}
         <input type="hidden" name="email" id="email" value="{{user.email}}">
         <table>
@@ -31,10 +31,10 @@
         </table>
         <input type="submit" value="Login">
     </form>
-    <p><span style="font-weight: bold">Not {{user.first_name}}?</span> <a href="/clear-logged">Sign in as another user.</a></p>
+    <p><span style="font-weight: bold">Not {{user.first_name}}?</span> <a href="/clear-logged/">Sign in as another user.</a></p>
     {% else %}
     <h2>Register</h2>
-    <form action="/register" method="POST">
+    <form action="/register/" method="POST">
         {% csrf_token %}
         <table>
             <tr>
@@ -61,7 +61,7 @@
         <input type="submit" value="Register">
     </form>
     <h2>Login</h2>
-    <form action="/login" method="POST">
+    <form action="/login/" method="POST">
         {% csrf_token %}
         <table>
             <tr>

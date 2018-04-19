@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{book.title}}</title>
+</head>
+<body>
+    <a href="/logout/"><button>Logout</button></a>
+    <a href="/books/"><button>Home</button></a>
+    <a href="/books/add-book/"><button>Add Book and Review</button></a>
+    {% if messages %}
+    <ul class="message">
+        {% for message in messages %}
+        <li{% if message.tags%} class="{{message.tags}}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <h1>{{book.title}}</h1>
+    <h3>Author: {{book.author}}</h3>
+    <h3>Reviews:</h3>
+    {% for review in reviews %}
+    <p>Rating: {% if review.rating == 5 %}&#9733;&#9733;&#9733;&#9733;&#9733;{% endif %}{% if review.rating == 4 %}&#9733;&#9733;&#9733;&#9733;&#9734;{% endif %}{% if review.rating == 3 %}&#9733;&#9733;&#9733;&#9734;&#9734;{% endif %}{% if review.rating == 2 %}&#9733;&#9733;&#9734;&#9734;&#9734;{% endif %}{% if review.rating == 1 %}&#9733;&#9734;&#9734;&#9734;&#9734;{% endif %}</p>
+    <p><a href="/users/{{review.reviewer.id}}/">{{review.reviewer.first_name}}</a> says: {{review.content}}</p>
+    {% if review.reviewer.id == request.session.user_id %}
+    <a href="/delete/{{review.id}}/"><button>Delete My Review</button></a>
+    {% endif %}
+    <hr>
+    {% endfor %}
+    <h3>Add a Review</h3>
+    <form action="/add_review/{{book.id}}/" method="post">
+        {% csrf_token %}
+        <textarea name="content" id="content" cols="40" rows="8"></textarea>
+        <p>Rating:</p>
+        <select name="rating" id="rating">
+            <option value="None">Rating</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <input type="submit" value="Submit Review">
+    </form>
+</body>
+</html>

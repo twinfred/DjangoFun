@@ -4,10 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Welcome</title>
 </head>
 <body>
-    <a href="/logout"><button>Logout</button></a>
-    <h1>Hello {{user.first_name}}</h1>
+    <h2>Hey there, {{user.first_name}}!</h2>
+    <a href="/logout/"><button>Logout</button></a>
+    <a href="/books/add-book/"><button>Add Book and Review</button></a>
+    {% if messages %}
+    <ul class="message">
+        {% for message in messages %}
+        <li{% if message.tags%} class="{{message.tags}}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <h3>Recent Book Reviews:</h3>
+    {% for review in recent_reviews %}
+    <h4><a href="/books/{{review.of_book.id}}/">{{review.of_book.title}}</a></h4>
+    <p>Rating: {% if review.rating == 5 %}&#9733;&#9733;&#9733;&#9733;&#9733;{% endif %}{% if review.rating == 4 %}&#9733;&#9733;&#9733;&#9733;&#9734;{% endif %}{% if review.rating == 3 %}&#9733;&#9733;&#9733;&#9734;&#9734;{% endif %}{% if review.rating == 2 %}&#9733;&#9733;&#9734;&#9734;&#9734;{% endif %}{% if review.rating == 1 %}&#9733;&#9734;&#9734;&#9734;&#9734;{% endif %}</p>
+    <p><a href="/users/{{review.reviewer.id}}/">{{review.reviewer.first_name}}</a> says: {{review.content}}</p>
+    {% if review.reviewer.id == request.session.user_id %}
+    <a href="/delete/{{review.id}}/"><button>Delete My Review</button></a>
+    {% endif %}
+    <hr>
+    {% endfor %}
+    <h3>Other Books with Reviews:</h3>
+    <ul>
+        {% for book in books %}
+        <li><a href="/books/{{book.id}}/">{{book.title}}</a></li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
