@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    {% if messages %}
+    <ul class="message">
+        {% for message in messages %}
+        <li{% if message.tags%} class="{{message.tags}}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if 'logged' in request.session %}
+    <h2>Welcome back, {{user.first_name}}!</h2>
+    <form action="/login" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="email" id="email" value="{{user.email}}">
+        <table>
+            <tr>
+                <td>Email: </td>
+                <td>{{user.email}}</td>
+            </tr>
+            <tr>
+                <td>Password: </td>
+                <td><input type="password" name="password" id="password"></td>
+            </tr>
+        </table>
+        <input type="submit" value="Login">
+    </form>
+    <p><span style="font-weight: bold">Not {{user.first_name}}?</span> <a href="/clear-logged">Sign in as another user.</a></p>
+    {% else %}
+    <h2>Register</h2>
+    <form action="/register" method="POST">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>First Name: </td>
+                <td><input type="text" name="first_name" id="first_name"></td>
+            </tr>
+            <tr>
+                <td>Last Name: </td>
+                <td><input type="text" name="last_name" id="last_name"></td>
+            </tr>
+            <tr>
+                <td>Email: </td>
+                <td><input type="text" name="email" id="email"></td>
+            </tr>
+            <tr>
+                <td>Password: </td>
+                <td><input type="password" name="password" id="password"></td>
+            </tr>
+            <tr>
+                <td>Confirm Password: </td>
+                <td><input type="password" name="pass_conf" id="pass_conf"></td>
+            </tr>
+        </table>
+        <input type="submit" value="Register">
+    </form>
+    <h2>Login</h2>
+    <form action="/login" method="POST">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Email: </td>
+                <td><input type="text" name="email" id="email"></td>
+            </tr>
+            <tr>
+                <td>Password: </td>
+                <td><input type="password" name="password" id="password"></td>
+            </tr>
+        </table>
+        <input type="submit" value="Login">
+    </form>
+    {% endif %}
+</body>
+</html>
