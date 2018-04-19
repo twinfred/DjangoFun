@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Welcome to 'Website Name'</title>
+</head>
+<body>
+    <div id="wrapper">
+        <h1>Welcome to 'Website Name'</h1>
+        <div id="login_reg_form">
+            <h2>Signin</h2>
+            {% if messages %}
+                <ul class="message">
+                    {% for message in messages %}
+                    <li{% if message.tags%} class="{{message.tags}}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <form action="/reg_user" method="post">
+                {% csrf_token %}
+                <p>Email Address:</p>
+                <input type="text" name="email" id="email">
+                <p>First Name:</p>
+                <input type="text" name="first_name" id="first_name">
+                <p>Last Name:</p>
+                <input type="text" name="last_name" id="last_name">
+                <p>Password:</p>
+                <input type="password" name="password" id="password">
+                <p>Confirm Password:</p>
+                <input type="password" name="pass_conf" id="pass_conf">
+                <input type="submit" value="Register">
+            </form>
+            <a href="/">Already have an account? Login here.</a>
+        </div>
+    </div>
+</body>
+</html>
