@@ -4,13 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Welcome to 'Website Name'</title>
+    <title>Add User</title>
 </head>
 <body>
     <div id="wrapper">
-        <h1>Welcome to 'Website Name'</h1>
+        <div id="header">
+            <h2>Website Name</h2>
+            <ul>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/dashboard/user/{{this_user.id}}">My Profile</a></li>
+                <ul>
+                    <li><a href="/dashboard/user/edit">Edit My Profile</a></li>
+                </ul>
+                <li><a href="/goodbye">Log off</a></li>
+            </ul>
+        </div>
+        <div id="main_content">
         <div id="login_reg_form">
-            <h2>Register</h2>
+            <h2>Add a new user</h2>
             {% if messages %}
                 <ul class="message">
                     {% for message in messages %}
@@ -32,7 +43,6 @@
                 <input type="password" name="pass_conf" id="pass_conf">
                 <input type="submit" value="Register">
             </form>
-            <a href="/">Already have an account? Login here.</a>
         </div>
     </div>
 </body>

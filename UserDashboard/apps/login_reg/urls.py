@@ -11,4 +11,6 @@ urlpatterns = [
     url(r'^reg_user', views.user_reg),
     # GET requests
     url(r'^goodbye', views.logout_user),
+    # Catch-all URL
+    url(r'^', views.login),
 ]

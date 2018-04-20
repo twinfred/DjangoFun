@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% if this_user.user_level == 1 %}User Dashboard{% endif %}{% if this_user.user_level == 9 %}Admin Dashboard{% endif %}</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <h2>Website Name</h2>
+            <ul>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/dashboard/user/{{this_user.id}}">My Profile</a></li>
+                <ul>
+                    <li><a href="/dashboard/user/edit">Edit My Profile</a></li>
+                </ul>
+                <li><a href="/goodbye">Log off</a></li>
+            </ul>
+        </div>
+        <div id="main_content">
+            <h1>{% if this_user.user_level == 1 %}All Users{% endif %}{% if this_user.user_level == 9 %}Manage Users{% endif %}</h1>
+            {% if this_user.user_level == 9 %}
+            <a href="/dashboard/user/add"><button>Add User</button></a>
+            {% endif %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Signup Date</th>
+                        <th>User Level</th>
+                        {% if this_user.user_level == 9 %}
+                        <th>Actions</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in all_users %}
+                    <tr>
+                        <td>{{user.id}}</td>
+                        <td><a href="/dashboard/user/{{user.id}}">{{user.first_name}} {{user.last_name}}</a></td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.created_at}}</td>
+                        <td>{% if user.user_level == 1 %}Normal{% endif %}{% if user.user_level == 9 %}Admin{% endif %}</td>
+                        {% if this_user.user_level == 9 %}
+                        <th>
+                            <!-- <a href="/dashboard/user/{{user.id}}/edit"><button>Edit</button></a> -->
+                            <a href="/dashboard/user/{{user.id}}/delete"><button>Delete</button></a>
+                        </th>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

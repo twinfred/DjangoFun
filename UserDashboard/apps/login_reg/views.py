@@ -7,15 +7,13 @@ from django.contrib import messages
 # User-facing pages
 def login(request):
     if 'user_id' in request.session:
-        return HttpResponse("Homepage") #TEMPORARY
-        # return redirect(HOMEPAGE)
+        return redirect('/dashboard/')
     else:
         return render(request, 'login_reg/login.html')
 
 def registration(request):
     if 'user_id' in request.session:
-        return HttpResponse("Homepage") #TEMPORARY
-        # return redirect(HOMEPAGE)
+        return redirect('/dashboard/')
     else:
         return render(request, 'login_reg/registration.html')
 
@@ -26,7 +24,7 @@ def logout(request):
 def user_reg(request):
     print "registering new user"
     if request.method != 'POST':
-        return redirect('/') #TEMPORARY
+        return redirect('/')
     errors = User.objects.reg_validation(request.POST)
     if len(errors):
         for tag, error in errors.iteritems():
@@ -34,15 +32,15 @@ def user_reg(request):
         return redirect('/registration')
     else:
         new_user = User.objects.create_user(request.POST)
-        request.session['user_id'] = new_user.id
+        if not 'user_id' in request.session:
+            request.session['user_id'] = new_user.id
         print "new user registered"
-        return redirect('/') #TEMPORARY
-        # return redirect(HOMEPAGE)
+        return redirect('/dashboard/')
 
 def user_login(request):
     print "logging in"
     if request.method != 'POST':
-        return redirect('/') #TEMPORARY
+        return redirect('/')
     errors = User.objects.login_validation(request.POST)
     if errors:
         for tag, error in errors.iteritems():
@@ -52,8 +50,7 @@ def user_login(request):
         user = User.objects.login_user(request.POST)
         request.session['user_id'] = user.id
         print "logged in"
-        return redirect('/') #TEMPORARY
-        # return redirect(HOMEPAGE)
+        return redirect('/dashboard/')
 
 # Get requests
 def logout_user(request):

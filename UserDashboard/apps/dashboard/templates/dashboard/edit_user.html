@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit My Profile</title>
+</head>
+<body>
+    <div id="header">
+        <h2>Website Name</h2>
+        <ul>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/dashboard/user/{{this_user.id}}">My Profile</a></li>
+            <ul>
+                <li><a href="/dashboard/user/edit">Edit My Profile</a></li>
+            </ul>
+            <li><a href="/goodbye">Log off</a></li>
+        </ul>
+    </div>
+    <div id="main_content">
+        <h1>Edit My Profile</h1>
+        {% if messages %}
+            <ul class="message">
+                {% for message in messages %}
+                <li{% if message.tags%} class="{{message.tags}}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <div class="box_med">
+            <h3>Edit Information</h3>
+            <form action="/dashboard/update_info" method="post">
+                {% csrf_token %}
+                <p>Email Address:</p>
+                <input type="text" name="email" id="email" value="{{this_user.email}}">
+                <p>First Name:</p>
+                <input type="text" name="first_name" id="first_name" value="{{this_user.first_name}}">
+                <p>Last Name:</p>
+                <input type="text" name="last_name" id="last_name" value="{{this_user.last_name}}">
+                <input type="submit" value="Save">
+            </form>
+        </div>
+        <div class="box_med">
+            <h3>Change Password</h3>
+            <form action="/dashboard/update_password" method="post">
+                {% csrf_token %}
+                <p>Password:</p>
+                <input type="password" name="password" id="password">
+                <p>Confirm Password:</p>
+                <input type="password" name="pass_conf" id="pass_conf">
+                <input type="submit" value="Update Password">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

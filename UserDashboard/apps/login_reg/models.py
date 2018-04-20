@@ -67,6 +67,67 @@ class UserManager(models.Manager):
         password = bcrypt.hashpw(postData['password'].encode(), bcrypt.gensalt())
         new_admin = User.objects.create(first_name = first_name, last_name = last_name, email = email, password = password, user_lever = 9)
         return new_admin
+    # Admin: Delete User
+    def delete_user(self, user_id):
+        User.objects.get(id=user_id).delete()
+        return "User deleted"
+    # User: Validate & Edit User Info
+    def edit_info_validation(self, postData):
+        errors = {}
+        if len(postData['first_name']) < 1:
+            errors['first_name'] = "A first name is required."
+        if len(postData['first_name']) < 2:
+            errors['first_name'] = "Your first name is too short."
+        if len(postData['last_name']) < 1:
+            errors['last_name'] = "A last name is required."
+        if len(postData['last_name']) < 2:
+            errors['last_name'] = "Your last name is too short."
+        if not NAME_REGEX.match(postData['first_name']) or not NAME_REGEX.match(postData['last_name']):
+            errors['email'] = "Your name can only contain alphabetic characters."
+        if not EMAIL_REGEX.match(postData['email']):
+            errors['email'] = "Your email is not the correct format."
+        return errors
+    def edit_my_info(self, postData, user_id):
+        edited_user = User.objects.get(id=user_id)
+        edited_user.email = postData['email']
+        edited_user.first_name = postData['first_name']
+        edited_user.last_name = postData['last_name']
+        edited_user.save()
+        return "Your info was updated."
+    # User: Validate & Edit User Password
+    def edit_password_validation(self, postData):
+        errors = {}
+        if len(postData['password']) < 8:
+            errors['password'] = "Your password must be at least 8 characters long."
+        if postData['password'] != postData['pass_conf']:
+            errors['password'] = "Your passwords don't match."
+        return errors
+    def edit_my_password(self, postData, user_id):
+        edited_user = User.objects.get(id=user_id)
+        password = bcrypt.hashpw(postData['password'].encode(), bcrypt.gensalt())
+        edited_user.password = password
+        edited_user.save()
+        return "Your password was updated."
+    # Context Options
+    def all_users(self, user_id):
+        context = {
+            "all_users": User.objects.all(),
+            "this_user": User.objects.get(id=user_id),
+        }
+        return context
+    def this_user(self, user_id):
+        context = {
+            "this_user": User.objects.get(id=user_id),
+        }
+        return context
+    def profile_users(self, profile_id, user_id):
+        context = {
+            "all_users": User.objects.all(),
+            "profile": User.objects.get(id=profile_id),
+            "this_user": User.objects.get(id=user_id),
+        }
+        return context
+    # Edit User Password
 
 # Users DB Table
 class User(models.Model):

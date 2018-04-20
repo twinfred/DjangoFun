@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{profile.first_name}} {{profile.last_name}}</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <h2>Website Name</h2>
+            <ul>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/dashboard/user/{{this_user.id}}">My Profile</a></li>
+                <ul>
+                    <li><a href="/dashboard/user/edit">Edit My Profile</a></li>
+                </ul>
+                <li><a href="/goodbye">Log off</a></li>
+            </ul>
+        </div>
+        <div id="main_content">
+            <h1>{{profile.first_name}} {{profile.last_name}}</h1>
+            <table>
+                <tr>
+                    <td>Registered at: </td>
+                    <td>{{profile.created_at}}</td>
+                </tr>
+                <tr>
+                    <td>User ID: </td>
+                    <td>#{{profile.id}}</td>
+                </tr>
+                <tr>
+                    <td>Email address: </td>
+                    <td>{{profile.email}}</td>
+                </tr>
+                <!-- <tr>
+                    <td>Description: </td>
+                    <td></td>
+                </tr> -->
+            </table>
+        </div>
+    </div>
+</body>
+</html>
